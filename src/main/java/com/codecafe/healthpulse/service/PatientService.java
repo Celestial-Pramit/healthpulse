@@ -1,6 +1,7 @@
 package com.codecafe.healthpulse.service;
 
 import com.codecafe.healthpulse.dto.DashboardStats;
+import com.codecafe.healthpulse.dto.PatientDTO;
 import com.codecafe.healthpulse.model.Patient;
 
 import java.util.List;
@@ -11,9 +12,9 @@ public interface PatientService {
 
     Patient findById(String id);
 
-    Patient create(Patient patient);
+    Patient create(PatientDTO dto);
 
-    Patient update(String id, Patient patient);
+    Patient update(String id, PatientDTO dto);
 
     void deleteById(String id);
 

@@ -1,6 +1,7 @@
 package com.codecafe.healthpulse.service.impl;
 
 import com.codecafe.healthpulse.dto.DashboardStats;
+import com.codecafe.healthpulse.dto.PatientDTO;
 import com.codecafe.healthpulse.enums.ClinicalStatus;
 import com.codecafe.healthpulse.model.Patient;
 import com.codecafe.healthpulse.repository.PatientRepository;
@@ -33,30 +34,35 @@ public class PatientServiceImpl implements PatientService {
     // Cache eviction: any write clears the caches so new data shows immediately
     @Override
     @CacheEvict(value = {"patients", "patient", "dashboard"}, allEntries = true)
-    public Patient create(Patient patient) {
-        if (patientRepository.existsByMrn(patient.getMrn())) {
+    public Patient create(PatientDTO dto) {
+        if (patientRepository.existsByMrn(dto.getMrn())) {
             throw new IllegalArgumentException("MRN already exists");
         }
-        if (patient.getStatus() == null) {
-            patient = patient.toBuilder().status(ClinicalStatus.TRIAGE).build();
-        }
+        Patient patient = Patient.builder()
+                .mrn(dto.getMrn())
+                .patientName(dto.getPatientName())
+                .department(dto.getDepartment())
+                .assignedBed(dto.getAssignedBed())
+                .acuity(dto.getAcuity())
+                .status(dto.getStatus() == null ? ClinicalStatus.TRIAGE : dto.getStatus())
+                .build();
         return patientRepository.save(patient);
     }
 
     @Override
     @CacheEvict(value = {"patients", "patient", "dashboard"}, allEntries = true)
-    public Patient update(String id, Patient patient) {
+    public Patient update(String id, PatientDTO dto) {
         Patient existingPatient = patientRepository.findById(id).orElse(null);
         if (existingPatient == null) {
             return null;  // patient not found
         }
         existingPatient = existingPatient.toBuilder()
-                .mrn(patient.getMrn())
-                .patientName(patient.getPatientName())
-                .department(patient.getDepartment())
-                .assignedBed(patient.getAssignedBed())
-                .acuity(patient.getAcuity())
-                .status(patient.getStatus())
+                .mrn(dto.getMrn())
+                .patientName(dto.getPatientName())
+                .department(dto.getDepartment())
+                .assignedBed(dto.getAssignedBed())
+                .acuity(dto.getAcuity())
+                .status(dto.getStatus())
                 .build();
         return patientRepository.save(existingPatient);
     }

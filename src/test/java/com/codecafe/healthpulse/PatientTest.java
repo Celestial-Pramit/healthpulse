@@ -1,5 +1,6 @@
 package com.codecafe.healthpulse;
 
+import com.codecafe.healthpulse.dto.PatientDTO;
 import com.codecafe.healthpulse.enums.Acuity;
 import com.codecafe.healthpulse.model.Patient;
 import com.codecafe.healthpulse.service.PatientService;
@@ -23,14 +24,14 @@ public class PatientTest {
 
     @Test
     public void testSavePatient() {
-        Patient patient = Patient.builder()
+        PatientDTO dto = PatientDTO.builder()
                 .mrn(uniqueMrn("MRN"))
                 .patientName("Jonathan Miller")
                 .department("Cardiology")
                 .assignedBed("BED-C-102")
                 .acuity(Acuity.CRITICAL)
                 .build();
-        Patient saved = patientService.create(patient);
+        Patient saved = patientService.create(dto);
         assertNotNull(saved.getId());
     }
 

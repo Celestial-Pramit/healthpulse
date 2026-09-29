@@ -1,6 +1,7 @@
 package com.codecafe.healthpulse.controller;
 
 import com.codecafe.healthpulse.dto.DashboardStats;
+import com.codecafe.healthpulse.dto.PatientDTO;
 import com.codecafe.healthpulse.model.Patient;
 import com.codecafe.healthpulse.service.PatientService;
 import jakarta.validation.Valid;
@@ -16,8 +17,8 @@ public class PatientController {
     private final PatientService patientService;
 
     @PostMapping("patients")
-    public Patient save(@Valid @RequestBody Patient patient) {
-        return patientService.create(patient);
+    public Patient save(@Valid @RequestBody PatientDTO dto) {
+        return patientService.create(dto);
     }
 
     @GetMapping("patients")
@@ -31,8 +32,8 @@ public class PatientController {
     }
 
     @PutMapping("patients/{id}")
-    public Patient update(@PathVariable String id, @Valid @RequestBody Patient patient) {
-        return patientService.update(id, patient);
+    public Patient update(@PathVariable String id, @Valid @RequestBody PatientDTO dto) {
+        return patientService.update(id, dto);
     }
 
     @DeleteMapping("patients/{id}")
