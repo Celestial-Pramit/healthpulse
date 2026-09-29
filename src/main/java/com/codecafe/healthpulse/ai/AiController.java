@@ -63,3 +63,29 @@ package com.codecafe.healthpulse.ai;
 //                .content();
 //    }
 //}
+//
+//
+
+
+
+// import org.springframework.ai.chat.client.ChatClient;
+//import org.springframework.stereotype.Service;
+//
+//@Service
+//public class GeminiService {
+//
+//    private final ChatClient chatClient;
+//
+//    public GeminiService(ChatClient.Builder builder) {
+//        this.chatClient = builder.build();
+//    }
+//
+//    public String sayHello() {
+//        String response = chatClient.prompt()
+//                .user("Hello Gemini")
+//                .call()
+//                .content();
+//        System.out.println(response);
+//        return response;
+//    }
+//}
